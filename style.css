@@ -43,6 +43,19 @@ body {
     z-index: 0;
 }
 
+/* Load animation for hero content */
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(10%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .hero-content {
     display: flex;
     flex-direction: column;
@@ -55,6 +68,7 @@ body {
     background-color: rgba(216, 216, 216, 0.86);
     color: black;
     font-size: 1.4rem;
+    animation: slide-up 1.3s ease-in-out;
 }
 
 .hero-content h1 {
