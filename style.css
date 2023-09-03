@@ -65,7 +65,8 @@ body {
     padding: 2rem;
     gap: 1.5rem;
     z-index: 2;
-    background-color: rgba(216, 216, 216, 0.86);
+    background-color: rgba(215, 215, 215, 0.6);
+    border-radius: 10px;
     color: black;
     font-size: 1.4rem;
     animation: slide-up 1.3s ease-in-out;

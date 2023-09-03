@@ -3,9 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>E-library</title>
+    <link rel="stylesheet" href="library-style.css">
 </head>
 <body>
+    <header class="intro">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Contact</a></li>
+                <li>
+                    <a href="#" class="add-book">
+                        <span class="button-content">
+                            <span class="button-text">Add Book</span>
+                            <span class="plus-sign">+</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <button id="new-book">+</button>
+    <!-- Will be called later like empty vars -->
+    <div class="overlay"></div>
+    <div class="bookshelf"></div>
+
+    <!-- Popup section -->
+    <section id="container" class="modal">
+        <div class="container">
+            <h1>Add a book</h1>
+            <div class="close" id="close-button">+</div>
+            <form id="form" method="post">
+                <label for="title">Title:</label>
+                <input type="text"
+                id="title"
+                name="title"
+                placeholder="Book's title"
+                autocomplete="off"
+                required
+                >
+                <label for="author">Author:</label>
+                <input type="text"
+                id="author"
+                name="author"
+                placeholder="Add author's name"
+                autocomplete="off"
+                required
+                >
+                <label for="pages">Number of pages:</label>
+                <input type="text"
+                id="pages"
+                name="pages"
+                placeholder="Pages"
+                autocomplete="off"
+                required>
+                <label for="notes">Notes:</label>
+                <input type="text"
+                id="notes"
+                name="notes"
+                placeholder="Notes"
+                autocomplete="off"
+                required>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </section>
     
+
+    <script src="library.js"></script>
 </body>
 </html>
