@@ -13,7 +13,6 @@ html {
 
 body {
     background-color: #f5f5f5;
-
 }
 
 ul, ol, a {
@@ -25,60 +24,112 @@ ul, ol, a {
 
 .intro {
     height: 10vh;
-    width: 100vw;
+    width: 100%;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding: 1rem 2rem; /* Responsive padding */
 }
 
 .intro ul {
     display: flex;
     align-items: center;
-    margin-left: 8rem;
-    gap: 2rem;
+    margin-left: 2rem; /* Responsive margin */
+    gap: 1rem; /* Responsive gap */
     padding: 0.5rem 1rem;
     border-radius: 5px;
+    position: relative;
+}
+
+.intro ul li {
+    position: relative;
+}
+
+.intro ul li::before {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Place the underline at the bottom of the list item */
+    left: 0;
+    width: 100%; /* Make the underline full width of the list item */
+    height: 2px; /* Set the height of the underline */
+    background-color: transparent; /* Initially transparent */
+    transition: background-color 0.5s ease; /* Add transition for smooth appearance */
+}
+
+.intro ul li:hover::before {
+    background-color: #f95959; /* Change the background color on hover */
 }
 
 .intro a {
     color: black;
 }
 
+/* Style the form container */
 .modal {
-    /* display: none; */
+    display: flex;
+    justify-content: center;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.5); /* Start with scale(0.5) */
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    height: 55%;
-    width: 35%;
+    height: 60vh; /* Responsive height */
+    width: 45vw; /* Responsive width */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Style the form inside the modal */
-.modal .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Center the form in the modal */
-.modal .modal-content form {
+.modal form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.close-button {
+.modal .modal-content form label {
+    font-size: 1.2rem; /* Set font size for labels */
+    margin-bottom: 0.5rem; /* Add some space between labels and inputs */
+}
+
+.modal form input[type="text"] {
+    padding: 0.5rem;
+    margin-bottom: 1rem; /* Add some space between inputs */
+    border: 1px solid #ccc; /* Add a border to inputs */
+    border-radius: 5px;
+    font-size: 1rem; /* Set font size for inputs */
+}
+
+/* Close button */
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
-    font-size: 1.2rem;
-    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px; /* Adjust the font size as needed */
+    background-color: #fff; /* Set the background color of the button */
+    border-radius: 50%; /* Make it a circle */
+    transition: transform 0.3s ease;
+}
+
+/* Rotate the close button to form a "+" */
+.modal.active #close-button {
+    transform: rotate(45deg);
+}
+
+#close-button:hover {
+    color: #f95959;
 }
 
 body.active::before {
@@ -93,7 +144,15 @@ body.active::before {
 }
 
 .modal.active {
-    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Show the shading when the form is active */
+body.active::before {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Style the shading around the modal */
@@ -106,14 +165,16 @@ body::before {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 /* Style the book cards */
 .book-card {
     background-color: #f5f5f5;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 2rem; /* Responsive padding */
+    margin: 1rem 0; /* Responsive margin */
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -121,7 +182,8 @@ body::before {
 #form {
     display: flex;
     flex-direction: column;
-    max-width: 30%;
+    max-width: 80%; /* Responsive max-width */
+    margin: 0 auto; /* Center the form horizontally */
 }
 
 #new-book {
@@ -140,6 +202,21 @@ body::before {
     right: 5%;
 }
 
+/* Submit button */
+.modal form #submit-btn {
+    background-color: #f95959;
+    color: white; /* Text color */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem; /* Set font size for the button */
+    transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+.modal form #submit-btn:hover {
+    background-color: #000000;
+}
 
 @media screen and (max-width: 768px) {
     .intro {
@@ -147,6 +224,10 @@ body::before {
     }
 
     .intro ul {
-        margin-left: 0;
+        margin-left: 1rem; /* Adjust margin for smaller screens */
+    }
+
+    .modal {
+        width: 90%; /* Adjust modal width for smaller screens */
     }
 }

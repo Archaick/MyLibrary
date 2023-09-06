@@ -20,15 +20,13 @@ if (books.length > 0) {
 // Function to toggle the form's visibility
 function toggleForm() {
     if (formOpen) {
-        formContainer.style.transform = "scale(0)";
+        formContainer.classList.remove("active"); // Remove the "active" class
         newBook.style.transform = "rotate(0)";
         form.reset();
-        formContainer.style.opacity = 0;
         formOpen = false;
     } else {
-        formContainer.style.transform = "scale(1)";
+        formContainer.classList.add("active"); // Add the "active" class
         newBook.style.transform = "rotate(45deg)";
-        formContainer.style.opacity = 1;
         formOpen = true;
     }
 }
