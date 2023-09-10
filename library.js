@@ -55,18 +55,17 @@ function displayBooks() {
         bookNode.classList.add("book");
         bookNode.setAttribute("data-index", `${i}`);
 
-        // Create elements for book details (title, author, pages, notes)
         const titleNode = document.createElement("h2");
-        titleNode.innerHTML = `Title: ${book.title}`;
-
+        titleNode.innerHTML = `Title: <span class="user-input">${book.title}</span>`;
+    
         const authorNode = document.createElement("h3");
-        authorNode.innerHTML = `Author: ${book.author}`;
-
+        authorNode.innerHTML = `Author: <span class="user-input">${book.author}</span>`;
+    
         const pageNode = document.createElement("h3");
-        pageNode.innerHTML = `Pages: ${book.pages}`;
-
+        pageNode.innerHTML = `Pages: <span class="user-input">${book.pages}</span>`;
+    
         const notesNode = document.createElement("h3");
-        notesNode.innerHTML = `Notes: ${book.notes}`;
+        notesNode.innerHTML = `Notes: <span class="user-input">${book.notes}</span>`;
 
         // Create buttons for update and delete
         const updateNode = document.createElement("button");

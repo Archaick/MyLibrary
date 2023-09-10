@@ -231,31 +231,37 @@ body::before {
     padding: 20px; /* Add some padding to the grid */
 }
 
+/* user-input style */
+.user-input {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    color: rgb(60, 60, 60);
+    overflow: hidden;
+    max-height: 2.4rem; /* Adjust the max height to control the text size */
+    word-wrap: break-word; /* Allow the text to wrap within the container */
+}
+
 .book {
     display: grid;
-    justify-items: center;
-    gap: 0.8rem;
+    grid-template-columns: repeat(2, auto); /* Two columns for buttons */
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
     background-color: white;
     padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-/* Selectors, styling inputs */
 
-/* Style the second <h3> element within a book card */
-.book h3:nth-child(2) {
-    color: green; /* Change the color as desired */
-    font-style: italic; /* Add other styles as needed */
+.book h2, h3 {
+    color: black;
+    font-size: 1rem;
+    grid-column: span 3;
 }
-
-.book h3:nth-child(3) {
-    color: green; /* Change the color as desired */
-    font-style: italic; /* Add other styles as needed */
-}
-
 
 .book button {
-    max-width: 300px;
+    width: 100px;
     background-color: #f95959; 
     color: white;
     border: none; 
@@ -265,6 +271,11 @@ body::before {
     font-size: 1rem; 
     transition: background-color 0.3s ease; 
     outline: none;
+}
+
+.book button.update,
+.book button.trash {
+    align-self: center; /* Align to the middle of the column */
 }
 
 .book button:hover {
