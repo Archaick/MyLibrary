@@ -242,22 +242,97 @@ body::before {
     word-wrap: break-word; /* Allow the text to wrap within the container */
 }
 
+/* Update the book class */
 .book {
     display: grid;
-    grid-template-columns: repeat(2, auto); /* Two columns for buttons */
-    justify-content: center;
-    gap: 1rem;
-    align-items: center;
+    grid-template-rows: auto auto auto auto auto auto auto; /* Define rows for each element */
     background-color: white;
     padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    animation: cardAppear 0.5s ease forwards;
+
+}
+
+/* Animation for card creation */
+@keyframes cardAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animation for card removal */
+@keyframes cardDisappear {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+.book.disappear {
+    animation: cardDisappear 0.1s ease forwards;
+}
+
+
+/* Update the read checkbox styles */
+.read-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #f95959;
+    background-color: #f95959;
+    grid-row: 1; /* Place the checkbox in the first row */
+}
+
+/* Update the label for the checkbox */
+.read-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    grid-row: 5; /* Place the label in the second row */
+}
+
+/* Update the buttons */
+.update,
+.trash {
+    background-color: #f95959;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    outline: none;
+    grid-row: 6; /* Place the buttons in the third row */
+}
+
+/* Add some spacing between the label and the buttons */
+.read-label, .update, .trash {
+    margin-top: 0.5rem;
 }
 
 .book h2, h3 {
     color: black;
     font-size: 1rem;
     grid-column: span 3;
+}
+
+.read-div label {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
 }
 
 .book button {
@@ -275,12 +350,15 @@ body::before {
 
 .book button.update,
 .book button.trash {
-    align-self: center; /* Align to the middle of the column */
+    align-self: auto; /* Align to the middle of the column */
 }
 
 .book button:hover {
     background-color: #000000; 
 }
+
+/* Checkbox read/not read */
+
 
 @media screen and (max-width: 768px) {
     .intro {

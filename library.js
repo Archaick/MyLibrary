@@ -1,3 +1,4 @@
+// Initialize variables
 const addBookLink = document.querySelector('.add-book');
 const newBook = document.querySelector('#new-book');
 const formContainer = document.querySelector('#container');
@@ -44,6 +45,71 @@ closeButton.addEventListener("click", () => {
     toggleForm();
 });
 
+// Function to create a book card
+// Function to create a book card
+function createBookCard(book, index) {
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("book");
+    bookCard.setAttribute("data-index", index);
+
+    const titleNode = document.createElement("h2");
+    titleNode.innerHTML = `Title: <span class="user-input">${book.title}</span>`;
+
+    const authorNode = document.createElement("h3");
+    authorNode.innerHTML = `Author: <span class="user-input">${book.author}</span>`;
+
+    const pageNode = document.createElement("h3");
+    pageNode.innerHTML = `Pages: <span class="user-input">${book.pages}</span>`;
+
+    const notesNode = document.createElement("h3");
+    notesNode.innerHTML = `Notes: <span class="user-input">${book.notes}</span>`;
+
+    // Create a div to wrap the "Check if read" label and checkbox
+    const readDiv = document.createElement("div");
+    readDiv.classList.add("read-div");
+
+    // Label for the "Check if read" checkbox
+    const readLabel = document.createElement("label");
+    readLabel.textContent = "Check if read: ";
+
+    // Create "Read" or "Not Read" checkbox
+    const readCheckbox = document.createElement("input");
+    readCheckbox.type = "checkbox";
+    readCheckbox.checked = book.isRead; // Set the initial state
+    // Adding class to the checkbox
+    readCheckbox.classList.add("read-checkbox");
+
+    readCheckbox.addEventListener("change", () => {
+        // Update the book's read status when the checkbox is toggled
+        book.isRead = readCheckbox.checked;
+        localStorage.setItem("books", JSON.stringify(books)); // Update local storage
+    });
+
+    // Append elements to the readDiv
+    readLabel.appendChild(readCheckbox);
+    readDiv.appendChild(readLabel);
+
+    // Create buttons for update and delete
+    const updateNode = document.createElement("button");
+    updateNode.classList = "update";
+    updateNode.innerHTML = `Update <i class="fas fa-pen"></i>`;
+
+    const trashNode = document.createElement("button");
+    trashNode.classList = "trash";
+    trashNode.innerHTML = `Delete <i class="fas fa-trash-alt">`;
+
+    // Append elements to the bookCard
+    bookCard.appendChild(titleNode);
+    bookCard.appendChild(authorNode);
+    bookCard.appendChild(pageNode);
+    bookCard.appendChild(notesNode);
+    bookCard.appendChild(readDiv); // Append the readDiv
+    bookCard.appendChild(updateNode);
+    bookCard.appendChild(trashNode);
+
+    return bookCard;
+}
+
 // Function to display books
 function displayBooks() {
     // Clear existing books
@@ -51,41 +117,10 @@ function displayBooks() {
 
     // Loop through the books and display them
     books.forEach(function (book, i) {
-        let bookNode = document.createElement("div");
-        bookNode.classList.add("book");
-        bookNode.setAttribute("data-index", `${i}`);
+        const bookCard = createBookCard(book, i);
 
-        const titleNode = document.createElement("h2");
-        titleNode.innerHTML = `Title: <span class="user-input">${book.title}</span>`;
-    
-        const authorNode = document.createElement("h3");
-        authorNode.innerHTML = `Author: <span class="user-input">${book.author}</span>`;
-    
-        const pageNode = document.createElement("h3");
-        pageNode.innerHTML = `Pages: <span class="user-input">${book.pages}</span>`;
-    
-        const notesNode = document.createElement("h3");
-        notesNode.innerHTML = `Notes: <span class="user-input">${book.notes}</span>`;
-
-        // Create buttons for update and delete
-        const updateNode = document.createElement("button");
-        updateNode.classList = "update";
-        updateNode.innerHTML = `Update <i class="fas fa-pen"></i>`;
-
-        const trashNode = document.createElement("button");
-        trashNode.classList = "trash";
-        trashNode.innerHTML = `Delete <i class="fas fa-trash-alt">`;
-
-        // Append elements to the bookNode
-        bookNode.appendChild(titleNode);
-        bookNode.appendChild(authorNode);
-        bookNode.appendChild(pageNode);
-        bookNode.appendChild(notesNode);
-        bookNode.appendChild(updateNode);
-        bookNode.appendChild(trashNode);
-
-        // Append the bookNode to the bookshelf
-        bookshelf.appendChild(bookNode);
+        // Append the bookCard to the bookshelf
+        bookshelf.appendChild(bookCard);
     });
 }
 
@@ -101,7 +136,7 @@ function addOrUpdateBook(e) {
 
     if (!isUpdateMode) {
         // Create a new Book object
-        const book = { title, author, pages, notes };
+        const book = { title, author, pages, notes, isRead: false };
 
         // Add the book to the books array
         books.push(book);
@@ -111,7 +146,8 @@ function addOrUpdateBook(e) {
             title,
             author,
             pages,
-            notes
+            notes,
+            isRead: books[editedIndex].isRead // Preserve the read status
         };
         books[editedIndex] = updatedBook;
 
