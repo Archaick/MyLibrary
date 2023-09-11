@@ -250,9 +250,14 @@ body::before {
     padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
     animation: cardAppear 0.5s ease forwards;
+    min-width: 400px;
 
+}
+
+.book  {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 /* Animation for card creation */
@@ -282,7 +287,6 @@ body::before {
 .book.disappear {
     animation: cardDisappear 0.1s ease forwards;
 }
-
 
 /* Update the read checkbox styles */
 .read-checkbox {
@@ -348,17 +352,36 @@ body::before {
     outline: none;
 }
 
-.book button.update,
-.book button.trash {
-    align-self: auto; /* Align to the middle of the column */
-}
-
 .book button:hover {
     background-color: #000000; 
 }
 
-/* Checkbox read/not read */
+/* Author */
+.author {
+    position: absolute;
+    right: 0;
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    animation: dropFromTop 2s ease-in-out;
+}
 
+.github-icon {
+    background-image: url(img/github.png);
+    color: black;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 36px;
+    width: 34px;
+    display: inline-block;
+    transition: transform 1s ease;
+}
+    
+.github-icon:hover {
+    transform: rotate(360deg);
+}
 
 @media screen and (max-width: 768px) {
     .intro {
@@ -372,15 +395,41 @@ body::before {
     .modal {
         width: 90%;
     }
+    
+    .author {
+        display: none;
+    }
+
 }
 
 /* Bookshelf */
 @media screen and (max-width: 768px) {
     .bookshelf {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
+        grid-template-columns: 1fr; /* Single column on smaller screens */    
     }
-    
-    .book {
-        justify-self: center;
+
+    /* Separate media animation */
+    .github-icon {
+        animation: dropGitHub 2s ease-in-out;
+    }
+
+}
+
+@keyframes dropFromTop {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Keyframes for dropping the GitHub icon */
+@keyframes dropGitHub {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
     }
 }

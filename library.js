@@ -1,4 +1,3 @@
-// Initialize variables
 const addBookLink = document.querySelector('.add-book');
 const newBook = document.querySelector('#new-book');
 const formContainer = document.querySelector('#container');
@@ -45,8 +44,7 @@ closeButton.addEventListener("click", () => {
     toggleForm();
 });
 
-// Function to create a book card
-// Function to create a book card
+// Book cards
 function createBookCard(book, index) {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book");
