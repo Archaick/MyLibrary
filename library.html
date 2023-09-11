@@ -56,16 +56,20 @@
                 <input type="text"
                 id="pages"
                 name="pages"
-                placeholder="Pages"
+                placeholder="Digits only"
                 autocomplete="off"
+                pattern="[1-9]\d*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                maxlength="6"
                 required>
                 <label for="notes">Notes:</label>
                 <input type="text"
                 id="notes"
                 name="notes"
-                placeholder="Notes"
+                placeholder="Notes 128 characters"
                 autocomplete="off"
-                required>
+                required
+                maxlength="256">
                 <input type="submit" value="Submit" id="submit-btn">
             </form>
         </div>

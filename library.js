@@ -1,21 +1,18 @@
-// Initialize variables
 const addBookLink = document.querySelector('.add-book');
 const newBook = document.querySelector('#new-book');
 const formContainer = document.querySelector('#container');
 const form = document.querySelector('#form');
 const closeButton = document.querySelector('#close-button');
 const bookshelf = document.querySelector('.bookshelf');
+const submitButton = document.getElementById('submit-btn');
 
 // Initialize books array from local storage
 let books = JSON.parse(localStorage.getItem("books")) || [];
 
 // Variable to track if the form is open
 let formOpen = false;
-
-// Check if there are any existing books in local storage
-if (books.length > 0) {
-    displayBooks();
-}
+let isUpdateMode = false; // Track whether we are in Update mode
+let editedIndex = -1; // Track the index of the book being edited
 
 // Function to toggle the form's visibility
 function toggleForm() {
@@ -24,6 +21,9 @@ function toggleForm() {
         newBook.style.transform = "rotate(0)";
         form.reset();
         formOpen = false;
+        isUpdateMode = false; // Reset Update mode
+        submitButton.value = "Submit"; // Reset the submit button text
+        editedIndex = -1; // Reset the editedIndex
     } else {
         formContainer.classList.add("active"); // Add the "active" class
         newBook.style.transform = "rotate(45deg)";
@@ -89,8 +89,8 @@ function displayBooks() {
     });
 }
 
-// Function to add a book
-function addBook(e) {
+// Function to add or update a book
+function addOrUpdateBook(e) {
     e.preventDefault();
 
     // Get the form input values (title, author, pages, notes)
@@ -99,11 +99,31 @@ function addBook(e) {
     const pages = document.getElementById("pages").value;
     const notes = document.getElementById("notes").value;
 
-    // Create a new Book object
-    const book = { title, author, pages, notes };
+    if (!isUpdateMode) {
+        // Create a new Book object
+        const book = { title, author, pages, notes };
 
-    // Add the book to the books array
-    books.push(book);
+        // Add the book to the books array
+        books.push(book);
+    } else {
+        // Update the existing book at the editedIndex
+        const updatedBook = {
+            title,
+            author,
+            pages,
+            notes
+        };
+        books[editedIndex] = updatedBook;
+
+        // Reset isUpdateMode
+        isUpdateMode = false;
+
+        // Reset the editedIndex
+        editedIndex = -1;
+
+        // Reset the submit button text
+        submitButton.value = "Submit";
+    }
 
     // Save the updated books array to local storage
     localStorage.setItem("books", JSON.stringify(books));
@@ -116,7 +136,7 @@ function addBook(e) {
 }
 
 // Event listener for form submission
-form.addEventListener("submit", addBook);
+form.addEventListener("submit", addOrUpdateBook);
 
 // Function to delete a book
 function deleteBook(index) {
@@ -136,5 +156,33 @@ bookshelf.addEventListener("click", (e) => {
         const bookNode = e.target.parentElement;
         const index = bookNode.getAttribute("data-index");
         deleteBook(index);
+    } else if (e.target.classList.contains("update")) {
+        const bookNode = e.target.parentElement;
+        const index = bookNode.getAttribute("data-index");
+        editBook(index);
     }
 });
+
+// Function to edit a book
+function editBook(index) {
+    const book = books[index];
+    document.getElementById("title").value = book.title;
+    document.getElementById("author").value = book.author;
+    document.getElementById("pages").value = book.pages;
+    document.getElementById("notes").value = book.notes;
+
+    // Open the modal
+    toggleForm();
+
+    // Set isUpdateMode to true
+    isUpdateMode = true;
+
+    // Set the editedIndex to the current index
+    editedIndex = index;
+
+    // Update the submit button text
+    submitButton.value = "Update";
+}
+
+// Display books initially
+displayBooks();
